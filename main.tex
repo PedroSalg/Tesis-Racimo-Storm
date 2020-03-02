@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt,twoside]{report}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=3cm]{geometry}
+
+\usepackage{comment}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{multirow, array} 
+\usepackage{chngcntr}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{cite}
+\usepackage{adjustbox}
+\usepackage[table]{xcolor}
+\usepackage{float}
+\usepackage{listings}
+\usepackage[toc,page]{appendix}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=page,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+\title{}
+\begin{document}
+\begin{center}
+\thispagestyle{empty}
+\fontsize{12pt}{12pt}\selectfont 
+
+%%%%%%%%%%%%%%%%%%% PORTADA %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\textbf {\huge Diseño e implementación de una estación meteorológica para la medición de campo eléctrico atmosférico en observatorios de rayos cósmicos.}
+
+
+\vspace{3cm}
+
+{\large \textbf{Autores:}}
+
+\vspace{0.5cm}
+
+\large Pedro Andrés Salgado Meza\\Leonardo Antonio Florez Villegas
+
+\vspace{3cm}
+{\large \textbf{Director}}\\
+\vspace{0.5cm}
+{\large Jesús Peña Rodríguez }\\
+\vspace{0.5cm}
+{\large \textbf{Codirector}}\\
+\vspace{0.5cm}
+{\large Luis A. Núñez\\Jaime Barrero Pérez}
+\vspace{3cm}
+
+
+\normalsize
+\vspace{2cm}
+
+\large Universidad Industrial de Santander\\
+
+\large  Facultad de Fisicomecánicas \\
+
+\large  Escuela de Ingenierías Eléctrica, Electrónica y de Telecomunicaciones \\
+Enero 2020
+    
+  \end{center}
+\large
+
+
+\newpage
+%%%%%%%%%% CONTENIDO %%%%%%%
+
+\tableofcontents % indice de contenidos
+
+%\cleardoublepage
+\addcontentsline{toc}{chapter}{Lista de figuras} % para que aparezca en el indice de contenidos
+\listoffigures % indice de figuras
+
+
+%\input{Problem/Problem}
+%\input{Justification/Justification}
+%\input{Objectives/Objectives}
+\input{Capitulo_I/Capitulo1.tex}
+\input{E_lento/E_lento.tex}
+\input{Capitulo_III/Capitulo3.tex}
+\input{E_monitoreo/E_monitoreo.tex}
+%\input{State/State}
+%\input{Methodology/Methodology.tex}
+%\input{Plan/Plan}
+%\input{Schedule/Schedule.tex}
+%\input{Founding/Founding.tex}
+
+%\input{Actual/Actual}
+%\input{Conclusions/Conclusions}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%% Bibliografia %%%%%%%%%%%%%%%%%%%%%5
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliografía}%para que aparezca en la tabla de contenidos
+\bibliographystyle{unsrt}
+\bibliography{Bibliography/Racimo.bib}
+%Archivo con las referencias bibliográficas, creado en JabRef (o manualmente)
+\addcontentsline{toc}{chapter}{Anexos}
+\input{Anexos/anexos.tex}
+\end{document}

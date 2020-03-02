@@ -1,0 +1,93 @@
+\appendix
+\chapter{Códigos PSOC Creator 4.2}
+\section{ADC}\label{adc_i2c}
+\begin{lstlisting}[language=C]
+/* ========================================
+ *
+ * Copyright YOUR COMPANY, THE YEAR
+ * All Rights Reserved
+ * UNPUBLISHED, LICENSED SOFTWARE.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ * WHICH IS THE PROPERTY OF your company.
+ *
+ * ========================================
+*/
+#include "project.h"
+int main(void)
+{
+    CyGlobalIntEnable; /* Enable global interrupts. */
+    uint8  myBuffer[4];
+    int32 Vret;
+    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+    Mixer_Start();
+    Mixer_SetPower(Mixer_MEDPOWER);
+    ADC_Start();
+    EZI2C_Start();
+    EZI2C_SetAddress1(0x60);
+    
+    
+    for(;;)
+    {
+        ADC_StartConvert();
+        ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+        Vret = ADC_GetResult32();
+        ADC_StopConvert();
+        myBuffer[0] = (Vret >> 24) & 0xff;
+        myBuffer[1] = (Vret >> 16) & 0xff;
+        myBuffer[2] = (Vret >> 8) & 0xff;
+        myBuffer[3] = (Vret >> 0) & 0xff;
+        EZI2C_SetBuffer1(4,4,myBuffer);
+        CyDelay(100);
+
+    }               
+}
+
+/* [] END OF FILE */
+
+\end{lstlisting}
+
+\chapter{Códigos Python}
+\section{Adquisición GPS}\label{gps_code}
+\begin{lstlisting}[language=Python]
+
+# Serial4.py
+
+import serial
+
+port = "/dev/ttyAMA0"  # Raspberry Pi 2
+#port = "/dev/ttyS0"    # Raspberry Pi 3
+
+def parseGPS(data):
+#    print "raw:", data
+    if data[0:6] == "$GPGGA":
+        s = data.split(",")
+        if s[7] == '0':
+            print "no satellite data available"
+            return        
+        time = s[1][0:2] + ":" + s[1][2:4] + ":" + s[1][4:6]
+        lat = decode(s[2])
+        dirLat = s[3]
+        lon = decode(s[4])
+        dirLon = s[5]
+        alt = s[9] + " m"
+        sat = s[7]
+        
+
+
+def decode(coord):
+    # DDDMM.MMMMM -> DD deg MM.MMMMM min
+    v = coord.split(".")
+    head = v[0]
+    tail =  v[1]
+    deg = head[0:-2]
+    min = head[-2:]
+    return deg + " deg " + min + "." + tail + " min"
+
+ser = serial.Serial(port, baudrate = 9600, timeout = 0.5)
+while True:
+    data = ser.readline()
+    parseGPS(data)
+    
+\end{lstlisting}
+
